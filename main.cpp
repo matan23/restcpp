@@ -1,7 +1,9 @@
-#include <iostream>
+#include "restsql.h"
 
 using namespace std;
 
 int	main(void) {
-	cout << "bla" << "\n";	
+
+	ITranslatable *query = new CreateTable();
+	cout << query->translateToSqlQuery();
 }

@@ -1,7 +1,7 @@
 NAME    = MyRestSql
 
 
-SRC     =	main.cpp
+SRC     =	main.cpp create_table.cpp
 
 OBJ	= $(SRC:.cpp=.o)
 
