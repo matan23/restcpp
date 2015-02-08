@@ -23,6 +23,7 @@ all	:  $(OBJ)
 clean	:
 	  find . -name "*~" -exec rm {} \;
 	  find . -name "*.o" -exec rm {} \;
+	  find . -name "dev.sqlite3" -exec rm {} \;
 
 fclean	: clean
 	  $(RM) $(NAME)

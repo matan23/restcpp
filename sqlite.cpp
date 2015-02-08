@@ -6,14 +6,16 @@ Sqlite::Sqlite(string database, string query)
 {
 	this->database = database;
 	this->query = query;
+   this->res.clear();
 }
 
-static int callback(void *NotUsed, int argc, char **argv, char **azColName){
+static int callback(void *db, int argc, char **argv, char **azColName){
    int i;
    for(i=0; i<argc; i++){
       printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
    }
    printf("\n");
+
    return 0;
 }
 
@@ -31,7 +33,7 @@ int Sqlite::exec() {
    }
 
    /* Execute SQL statement */
-   rc = sqlite3_exec(this->db, this->query.c_str(), callback, 0, &(this->zErrMsg));
+   rc = sqlite3_exec(this->db, this->query.c_str(), callback, (void*)this, &(this->zErrMsg));
 
    if(rc != SQLITE_OK){
    	fprintf(stderr, "SQL error: %s\n", this->zErrMsg);

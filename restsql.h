@@ -4,6 +4,7 @@
 # include <iostream>
 # include <string>
 #include <map>
+#include <vector>
 
 # include "itranslatable.h"
 # include "create_table.h"
