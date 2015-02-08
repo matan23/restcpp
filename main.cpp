@@ -1,5 +1,4 @@
 #include "restsql.h"
-#include <map>
 
 using namespace std;
 
@@ -8,7 +7,15 @@ int	main(void) {
 	columns["name"] = "text";
 	columns["age"] = "int";
 
-	ITranslatable *query = new CreateTable("person", columns);
+	ITranslatable *create_table = new CreateTable("person", columns);
 
-	cout << query->translateToSqlQuery() << "\n";
+	cout << create_table->translateToSqlQuery() << "\n";
+
+	map<string, string> values;
+	values["name"] = "Jero";
+	values["age"] = "24";
+
+	ITranslatable *insert = new Insert("person", values);
+
+	cout << insert->translateToSqlQuery() << "\n";
 }

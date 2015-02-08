@@ -3,10 +3,11 @@
 
 # include <iostream>
 # include <string>
+#include <map>
 
 # include "itranslatable.h"
-
 # include "create_table.h"
+# include "insert.h"
 
 using namespace std;
 
