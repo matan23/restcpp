@@ -8,6 +8,7 @@
 # include "itranslatable.h"
 # include "create_table.h"
 # include "insert.h"
+# include "select.h"
 
 using namespace std;
 
