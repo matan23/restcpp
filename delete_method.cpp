@@ -3,5 +3,6 @@
 using namespace std;
 
 void	delete_method(std::string &url, std::string &content) {
-	cout << "delete";	
+	cout << url;	
+	cout << content;
 }

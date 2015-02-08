@@ -3,5 +3,6 @@
 using namespace std;
 
 void	put_method(std::string &url, std::string &content) {
-	cout << "put";	
+cout << url;	
+	cout << content;
 }

@@ -24,6 +24,7 @@
 #include <fstream>
 
 void	parse_table(std::string &content);
+void	parse_row(std::string &content);
 
 void parse_error(Json::Reader &reader);
 void printJSONValue(const Json::Value &val);

@@ -15,7 +15,8 @@ patch_method.cpp\
 get_method.cpp\
 jsoncpp.cpp \
 parser_helper.cpp \
-parse_table.cpp
+parse_table.cpp\
+parse_row.cpp
 
 OBJ	= $(SRC:.cpp=.o)
 

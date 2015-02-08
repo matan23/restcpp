@@ -27,6 +27,15 @@ static ITranslatable *parse_payload(std::string &content) {
 }
 
 void	parse_table(std::string &content) {
-	ITranslatable *query = parse_payload(content);
-	cout << query->translateToSqlQuery() << "\n";	
+	string database_name = string("dev"); 
+
+
+	ITranslatable *create_table = parse_payload(content);
+
+	cout << create_table->translateToSqlQuery() << "\n";	
+	Sqlite *db =  new Sqlite(database_name, create_table->translateToSqlQuery());
+	cout << db->exec() << "\n";
+	if (db->zErrMsg != NULL) {
+		cout << db->zErrMsg;
+	}
 }
