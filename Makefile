@@ -1,7 +1,18 @@
 NAME    = MyRestSql
 
-
-SRC     =	main.cpp create_table.cpp insert.cpp select.cpp update.cpp delete.cpp sqlite.cpp
+SRC     =	main.cpp \
+create_table.cpp\
+insert.cpp\
+update.cpp\
+delete.cpp\
+select.cpp\
+sqlite.cpp\
+dispatcher.cpp\
+post_method.cpp\
+put_method.cpp\
+delete_method.cpp\
+patch_method.cpp\
+get_method.cpp
 
 OBJ	= $(SRC:.cpp=.o)
 

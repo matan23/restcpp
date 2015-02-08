@@ -2,9 +2,7 @@
 
 using namespace std;
 
-int	main(void) {
-
-
+void debug() {
 	string database_name = string("dev"); 
 	string table_name = string("person");
 	
@@ -123,4 +121,8 @@ int	main(void) {
 	// db =  new Sqlite(database_name, select->translateToSqlQuery());
 	// db->exec();
 	
+}
+
+int	main(void) {
+	server();
 }
