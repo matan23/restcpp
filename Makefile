@@ -1,7 +1,7 @@
 NAME    = MyRestSql
 
 
-SRC     =	main.cpp create_table.cpp insert.cpp select.cpp
+SRC     =	main.cpp create_table.cpp insert.cpp select.cpp sqlite.cpp
 
 OBJ	= $(SRC:.cpp=.o)
 
@@ -11,11 +11,13 @@ CXXFLAGS  = -W -Wall -g3
 
 # LFLAGS	= -pthread -lboost_system-mt -lboost_regex-mt -lboost_filesystem-mt
 
+LFLAGS	= -l sqlite3
+
 RM      = rm -f
 
 
 all	:  $(OBJ)
-	   $(CC) -o $(NAME) $(OBJ)
+	   $(CC) -o $(NAME) $(LFLAGS) $(OBJ)
 
 
 clean	:

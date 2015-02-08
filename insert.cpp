@@ -19,7 +19,7 @@ std::string Insert::translateToSqlQuery() {
 	query += ") VALUES (";
 
 	for(std::map<string, string>::iterator itr = this->values.begin(), itr_end = this->values.end(); itr != itr_end; ++itr) {
-		query += itr->second + ", ";
+		query += "'" + itr->second + "'" +", ";
 	}
 	query = query.substr(0, query.size()-2);
 	

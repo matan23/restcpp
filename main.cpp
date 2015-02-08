@@ -5,9 +5,9 @@ using namespace std;
 int	main(void) {
 
 
+	string database_name = string("dev"); 
 	string table_name = string("person");
 	
-
 
 // 
 //
@@ -44,4 +44,23 @@ int	main(void) {
 //	
 	ITranslatable *select = new Select(table_name);
 	cout << select->translateToSqlQuery() << "\n";
+
+
+// 
+//
+// SQLite !
+//
+//	
+
+	Sqlite *db =  new Sqlite(database_name, create_table->translateToSqlQuery());
+	cout << db->exec() << "\n";
+
+
+	db =  new Sqlite(database_name, insert->translateToSqlQuery());
+	cout << db->exec() << "\n";
+
+
+	db =  new Sqlite(database_name, select->translateToSqlQuery());
+	cout << db->exec() << "\n";
+
 }
