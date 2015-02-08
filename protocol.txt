@@ -1,0 +1,12 @@
+Create Table
+URL: /table
+METHOD: POST
+PAYLOAD:
+{
+    "name" "Table",
+    "columns": {
+        "column1":"text"
+        "column2":"int",
+
+    }
+}

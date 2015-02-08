@@ -12,7 +12,10 @@ post_method.cpp\
 put_method.cpp\
 delete_method.cpp\
 patch_method.cpp\
-get_method.cpp
+get_method.cpp\
+jsoncpp.cpp \
+parser_helper.cpp \
+parse_table.cpp
 
 OBJ	= $(SRC:.cpp=.o)
 
