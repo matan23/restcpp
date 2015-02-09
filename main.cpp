@@ -1,4 +1,5 @@
 #include "restsql.h"
+#include <map>
 
 using namespace std;
 
