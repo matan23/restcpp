@@ -10,6 +10,7 @@
 # include "create_table.h"
 # include "insert.h"
 # include "select.h"
+# include "update.h"
 # include "sqlite.h"
 
 using namespace std;

@@ -63,4 +63,17 @@ int	main(void) {
 	db =  new Sqlite(database_name, select->translateToSqlQuery());
 	cout << db->exec() << "\n";
 
+
+	values["age"] = "25";
+	values["name"] = "Matan";
+	ITranslatable *update = new Update(table_name, 1, values);
+	cout << update->translateToSqlQuery() << "\n";
+
+	db =  new Sqlite(database_name, update->translateToSqlQuery());
+	cout << db->exec() << "\n";
+
+
+	db =  new Sqlite(database_name, select->translateToSqlQuery());
+	cout << db->exec() << "\n";
+	
 }
