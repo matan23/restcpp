@@ -11,7 +11,7 @@ CXXFLAGS  = -W -Wall -g3
 
 # LFLAGS	= -pthread -lboost_system-mt -lboost_regex-mt -lboost_filesystem-mt
 
-LFLAGS	= -l sqlite3
+LFLAGS	= -l sqlite3 -lboost_unit_test_framework
 
 RM      = rm -f
 
