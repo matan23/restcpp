@@ -23,7 +23,7 @@ int	post_method(request_t& request_st, tcp::socket& socket) {
 			parse_table(request_st, socket);
 		} else {
 			cout << "trying to parse row" << endl;
-			parse_row(request_st.content);
+			parse_row(request_st, socket);
 		}
 	} else {
 		cout << "ERROR BAD URL" << endl;

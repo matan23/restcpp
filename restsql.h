@@ -54,7 +54,7 @@ void    dispatch(request_t& request_st, tcp::socket& socket);
 using boost::asio::ip::tcp;
 
 void	parse_table(request_t& request_st, tcp::socket& socket);
-void	parse_row(std::string &content);
+void	parse_row(request_t& request_st, tcp::socket& socket);
 
 void parse_error(Json::Reader &reader);
 void printJSONValue(const Json::Value &val);
