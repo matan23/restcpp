@@ -75,5 +75,16 @@ int	main(void) {
 
 	db =  new Sqlite(database_name, select->translateToSqlQuery());
 	cout << db->exec() << "\n";
+
+
+	ITranslatable *del = new Delete(table_name, 1);
+	cout << del->translateToSqlQuery() << "\n";
+
+	db =  new Sqlite(database_name, del->translateToSqlQuery());
+	cout << db->exec() << "\n";
+
+
+	db =  new Sqlite(database_name, select->translateToSqlQuery());
+	cout << db->exec() << "\n";
 	
 }
