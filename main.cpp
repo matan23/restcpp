@@ -79,6 +79,27 @@ int	main(void) {
 	}
 
 
+
+	ITranslatable *select_by_id = new Select(table_name, 2);
+	cout << select_by_id->translateToSqlQuery() << "\n";
+
+
+	db = new Sqlite(database_name, select_by_id->translateToSqlQuery());
+	db->exec();
+
+	if(db->rc != SQLITE_OK){
+		cout << "Error dammit : " + db->error_message << "\n";
+	}
+	else
+	{
+	   printf("Sql Result : \n");
+	   for(int j = 0; j < db->result.size(); j++) {
+	      printf("Row : %i\n", j);
+	      for(std::map<string, string>::iterator itr = db->result[j].begin(), itr_end = db->result[j].end(); itr != itr_end; ++itr) {
+	         cout << itr->first + " = " + itr->second + "\n";
+	      }
+	   }
+	}
 	// values["age"] = "25";
 	// values["name"] = "Matan";
 	// ITranslatable *update = new Update(table_name, 1, values);
