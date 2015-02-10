@@ -10,13 +10,13 @@ private:
 	std::string database;
 	sqlite3 *db;
 	char *zErrMsg;
-   	std::vector<std::map<std::string, std::string>*> res;
    	std::string query;
 public:
 	Sqlite(std::string, std::string);
 	int exec();
    	int rc;
 	std::string error_message;
+   	std::vector<std::map<std::string, std::string> > result;
 };
 
 #endif

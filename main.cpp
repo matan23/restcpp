@@ -50,20 +50,33 @@ int	main(void) {
 // SQLite !
 //
 //	
+	Sqlite *db;
 
-	// Sqlite *db =  new Sqlite(database_name, create_table->translateToSqlQuery());
-	// db->exec()
+	// db =  new Sqlite(database_name, create_table->translateToSqlQuery());
+	// db->exec();
 
 
-	Sqlite *db =  new Sqlite(database_name, insert->translateToSqlQuery());
+	// db = new Sqlite(database_name, insert->translateToSqlQuery());
+	// db->exec();
+
+
+
+	db = new Sqlite(database_name, select->translateToSqlQuery());
 	db->exec();
 
 	if(db->rc != SQLITE_OK){
 		cout << "Error dammit : " + db->error_message << "\n";
 	}
-
-	// db =  new Sqlite(database_name, select->translateToSqlQuery());
-	// db->exec();
+	else
+	{
+	   printf("Sql Result : \n");
+	   for(int j = 0; j < db->result.size(); j++) {
+	      printf("Row : %i\n", j);
+	      for(std::map<string, string>::iterator itr = db->result[j].begin(), itr_end = db->result[j].end(); itr != itr_end; ++itr) {
+	         cout << itr->first + " = " + itr->second + "\n";
+	      }
+	   }
+	}
 
 
 	// values["age"] = "25";
