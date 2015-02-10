@@ -1,6 +1,7 @@
 #include "restsql.h"
 
 using namespace std;
+using boost::asio::ip::tcp;
 
 static ITranslatable *parse_payload(std::string &content) {
 	Json::Value root;   // will contains the root value after parsing
@@ -26,16 +27,22 @@ static ITranslatable *parse_payload(std::string &content) {
 	return new CreateTable(name.asString(), columns_name);
 }
 
-void	parse_table(std::string &content) {
+void	parse_table(request_t& request_st, tcp::socket& socket) {
 	string database_name = string("dev"); 
 
 
-	ITranslatable *create_table = parse_payload(content);
+	ITranslatable *create_table = parse_payload(request_st.content);
 
 	cout << create_table->translateToSqlQuery() << "\n";	
 	Sqlite *db =  new Sqlite(database_name, create_table->translateToSqlQuery());
 	cout << db->exec() << "\n";
 	if (db->zErrMsg != NULL) {
-		cout << db->zErrMsg;
+		std::string ret = "ERROR";
+		boost::system::error_code ignored_error;
+  		boost::asio::write(socket, boost::asio::buffer(ret), ignored_error);
+	} else {
+		std::string ret = "OK";
+		boost::system::error_code ignored_error;
+  		boost::asio::write(socket, boost::asio::buffer(ret), ignored_error);
 	}
 }

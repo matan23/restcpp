@@ -9,7 +9,6 @@ class Sqlite
 private:
 	std::string database;
 	sqlite3 *db;
-	char *zErrMsg;
    	std::vector<std::map<std::string, std::string>*> res;
 
 	

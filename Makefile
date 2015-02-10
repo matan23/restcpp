@@ -1,7 +1,6 @@
 NAME    = MyRestSql
 
-SRC     =	main.cpp \
-create_table.cpp\
+SRC     = create_table.cpp\
 insert.cpp\
 update.cpp\
 delete.cpp\
@@ -16,7 +15,9 @@ get_method.cpp\
 jsoncpp.cpp \
 parser_helper.cpp \
 parse_table.cpp\
-parse_row.cpp
+parse_row.cpp\
+server.cpp\
+client_handler.cpp
 
 OBJ	= $(SRC:.cpp=.o)
 
@@ -26,14 +27,17 @@ CXXFLAGS  = -W -Wall -g3
 
 # LFLAGS	= -pthread -lboost_system-mt -lboost_regex-mt -lboost_filesystem-mt
 
-LFLAGS	= -l sqlite3 -lboost_unit_test_framework
+LFLAGS	= -l sqlite3 -lboost_unit_test_framework -pthread -lboost_system-mt -lboost_regex-mt -lboost_filesystem-mt
 
 RM      = rm -f
 
 
-all	:  $(OBJ)
-	   $(CC) -o $(NAME) $(LFLAGS) $(OBJ)
 
+all	:  $(OBJ)
+	   $(CC) -o $(NAME) $(LFLAGS) main.cpp $(OBJ)	   
+
+test :	$(OBJ)
+		g++ -otest $(LFLAGS) test.cpp $(OBJ)
 
 clean	:
 	  find . -name "*~" -exec rm {} \;

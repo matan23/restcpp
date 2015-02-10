@@ -2,7 +2,6 @@
 
 using namespace std;
 
-void	delete_method(std::string &url, std::string &content) {
-	cout << url;	
-	cout << content;
+int	delete_method(request_t& request_st, tcp::socket& socket) {
+	
 }
