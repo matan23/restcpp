@@ -15,6 +15,8 @@ private:
 public:
 	Sqlite(std::string, std::string);
 	int exec();
+   	int rc;
+	std::string error_message;
 };
 
 #endif

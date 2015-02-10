@@ -45,46 +45,48 @@ int	main(void) {
 	ITranslatable *select = new Select(table_name);
 	cout << select->translateToSqlQuery() << "\n";
 
-
 // 
 //
 // SQLite !
 //
 //	
 
-	Sqlite *db =  new Sqlite(database_name, create_table->translateToSqlQuery());
-	cout << db->exec() << "\n";
+	// Sqlite *db =  new Sqlite(database_name, create_table->translateToSqlQuery());
+	// db->exec()
 
 
-	db =  new Sqlite(database_name, insert->translateToSqlQuery());
-	cout << db->exec() << "\n";
+	Sqlite *db =  new Sqlite(database_name, insert->translateToSqlQuery());
+	db->exec();
+
+	if(db->rc != SQLITE_OK){
+		cout << "Error dammit : " + db->error_message << "\n";
+	}
+
+	// db =  new Sqlite(database_name, select->translateToSqlQuery());
+	// db->exec();
 
 
-	db =  new Sqlite(database_name, select->translateToSqlQuery());
-	cout << db->exec() << "\n";
+	// values["age"] = "25";
+	// values["name"] = "Matan";
+	// ITranslatable *update = new Update(table_name, 1, values);
+	// cout << update->translateToSqlQuery() << "\n";
+
+	// db =  new Sqlite(database_name, update->translateToSqlQuery());
+	// db->exec();
 
 
-	values["age"] = "25";
-	values["name"] = "Matan";
-	ITranslatable *update = new Update(table_name, 1, values);
-	cout << update->translateToSqlQuery() << "\n";
-
-	db =  new Sqlite(database_name, update->translateToSqlQuery());
-	cout << db->exec() << "\n";
+	// db =  new Sqlite(database_name, select->translateToSqlQuery());
+	// db->exec();
 
 
-	db =  new Sqlite(database_name, select->translateToSqlQuery());
-	cout << db->exec() << "\n";
+	// ITranslatable *del = new Delete(table_name, 1);
+	// cout << del->translateToSqlQuery() << "\n";
+
+	// db =  new Sqlite(database_name, del->translateToSqlQuery());
+	// db->exec();
 
 
-	ITranslatable *del = new Delete(table_name, 1);
-	cout << del->translateToSqlQuery() << "\n";
-
-	db =  new Sqlite(database_name, del->translateToSqlQuery());
-	cout << db->exec() << "\n";
-
-
-	db =  new Sqlite(database_name, select->translateToSqlQuery());
-	cout << db->exec() << "\n";
+	// db =  new Sqlite(database_name, select->translateToSqlQuery());
+	// db->exec();
 	
 }
