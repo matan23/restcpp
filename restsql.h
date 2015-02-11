@@ -25,6 +25,9 @@
 # include "json-forwards.h"
 # include "json.h"
 
+
+# include "response.h"
+
 # define BUFFER_SIZE (8192)
 
 using boost::asio::ip::tcp;
@@ -36,6 +39,7 @@ typedef struct			request_s {
   std::string			uri;
   std::string			content;
   std::vector<std::string>	uri_args;
+  Response				*responseBuilder;
 }						request_t;
 
 typedef	struct	s_route {

@@ -7,23 +7,24 @@ delete.cpp\
 select.cpp\
 sqlite.cpp\
 dispatcher.cpp\
+get_method.cpp\
 post_method.cpp\
 put_method.cpp\
 delete_method.cpp\
 patch_method.cpp\
-get_method.cpp\
 jsoncpp.cpp \
 parser_helper.cpp \
 parse_table.cpp\
 parse_row.cpp\
 server.cpp\
-client_handler.cpp
+client_handler.cpp\
+response.cpp
 
 OBJ	= $(SRC:.cpp=.o)
 
 CC      = g++
 
-CXXFLAGS  = -W -Wall -g3
+CXXFLAGS  = -W -Wall 
 
 # LFLAGS	= -pthread -lboost_system-mt -lboost_regex-mt -lboost_filesystem-mt
 

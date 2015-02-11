@@ -52,6 +52,7 @@ void	client_handler(tcp::socket& socket) {
   get_request_from_socket(socket, request);
   if (parse_request_string(request, request_st) == false)
     return ;
+  request_st.responseBuilder = new Response(socket);
   dispatch(request_st, socket);
   socket.close();
 }
