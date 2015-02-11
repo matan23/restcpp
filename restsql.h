@@ -61,6 +61,9 @@ void	parse_table(request_t& request_st, tcp::socket& socket);
 void	parse_row(request_t& request_st, tcp::socket& socket);
 int     getNumberOfRows(string table, int id);
 
+bool jsonValueIsSuppportedType(Json::Value &value);
+bool jsonKeyIsSuppportedType(Json::Value &value);
+bool 	jsonIsSuppportedType(Json::ValueIterator &iterator);
 std::string parse_error(Json::Reader &reader);
 void printJSONValue(const Json::Value &val);
 

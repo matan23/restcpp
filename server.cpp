@@ -1,5 +1,6 @@
 #include "restsql.h"
 
+
 void	server()
 {
 	boost::asio::io_service io;
@@ -13,6 +14,7 @@ void	server()
 		}
 	}
 	catch (std::exception& e) {
+		
 		std::cerr << "Exception: " << e.what() << std::endl;
 	}
 }

@@ -14,16 +14,25 @@ static ITranslatable *parse_payload(request_t& request_st, string &error) {
 
 	map<string, string> columns_key_value;
 	for (Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {            
-		std::string column_name = itr.key().asString();
-		std::string column_value = (*itr).asString();
+		if (jsonIsSuppportedType(itr)) {
+			std::string column_name = itr.key().asString();
+			std::string column_value = (*itr).asString();
 
-		columns_key_value[column_name.c_str()] = column_value;
+			columns_key_value[column_name.c_str()] = column_value;
+		} else {
+			error = "the json provided is probably malformatted json, please check documentation for supported payload";
+			return NULL;
+		}
+	}
+	if (columns_key_value.size() == 0) {
+		error = "expected values to insert";
+		return NULL;		
 	}
 
 	return new Insert(request_st.uri_args[0], columns_key_value);
 }
 
-void	parse_row(request_t& request_st, tcp::socket& socket) {
+void	parse_row(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
 	string database_name = string("dev"); 
 	string content = request_st.content;
 	string error = "";
@@ -45,7 +54,9 @@ void	parse_row(request_t& request_st, tcp::socket& socket) {
 		std::size_t found = error.find("no such");
   		if (found != std::string::npos) {		
 			request_st.responseBuilder->answer404();
-		} else {		
+		} else if (error.find("has no column") != std::string::npos) {		
+			request_st.responseBuilder->answer400WithPayload(error);
+		} else {
 			request_st.responseBuilder->answer500();		
 		}
 	} else {

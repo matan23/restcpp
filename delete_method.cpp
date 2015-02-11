@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int	delete_method(request_t& request_st, tcp::socket& socket) {
+int	delete_method(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
 	string database_name = string("dev");
 	std::string table;
 	int id;
@@ -40,4 +40,5 @@ int	delete_method(request_t& request_st, tcp::socket& socket) {
 	} else {
 		request_st.responseBuilder->answer400();
 	}
+	return 0;
 }

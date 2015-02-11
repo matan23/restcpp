@@ -30,11 +30,12 @@ bool	parse_request_string(const std::string& str, request_t& request_st) {
   request_st.method = result[1];
   request_st.uri = result[2];
 
+
   if ( boost::regex_search(str, result, pattern_content) )
     request_st.content = result[ result.size() - 1 ];
 
   uri_copy = request_st.uri;
-  while ((pos = uri_copy.find(delimiter)) != std::string::npos) {
+  while ((pos = uri_copy.find(delimiter)) != (int)std::string::npos) {
     token = uri_copy.substr(0, pos);
     if ( token.length() != 0 )
       request_st.uri_args.push_back(token);

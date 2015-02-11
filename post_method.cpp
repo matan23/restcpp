@@ -19,4 +19,5 @@ int	post_method(request_t& request_st, tcp::socket& socket) {
 	} else {
 		request_st.responseBuilder->answer400();
 	}
+	return 0;
 }

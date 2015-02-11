@@ -14,16 +14,26 @@ static ITranslatable *exec_update(string table, int id, string &content, string 
 
 	map<string, string> columns_key_value;
 	for (Json::ValueIterator itr = root.begin() ; itr != root.end() ; itr++ ) {            
-		std::string column_name = itr.key().asString();
-		std::string column_value = (*itr).asString();
 
-		columns_key_value[column_name.c_str()] = column_value;
+		if (jsonIsSuppportedType(itr)) {
+			std::string column_name = itr.key().asString();
+			std::string column_value = (*itr).asString();
+
+			columns_key_value[column_name.c_str()] = column_value;
+		} else {
+			error = "the json provided is probably malformatted json, please check documentation for supported payload";
+			return NULL;
+		}
+	}
+	if (columns_key_value.size() == 0) {
+		error = "expected values to update";
+		return NULL;		
 	}
 
 	return new Update(table, id, columns_key_value);
 }
 
-int	put_method(request_t& request_st, tcp::socket& socket) {
+int	put_method(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
 	std::string table;
 	int id;
 
@@ -68,4 +78,5 @@ int	put_method(request_t& request_st, tcp::socket& socket) {
 	} else {
 		request_st.responseBuilder->answer400();
 	}
+	return 0;
 }

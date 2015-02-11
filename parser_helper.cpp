@@ -6,6 +6,33 @@ std::string parse_error(Json::Reader &reader) {
 return error;
 }
 
+
+bool jsonKeyIsSuppportedType(Json::Value &value) {
+    return (value.isString() == true);
+}
+
+bool jsonValueIsSuppportedType(Json::Value &value) {
+return (value.isString() == true ||
+        value.isBool() == true ||
+        value.isInt() == true ||
+        value.isUInt() == true ||
+        value.isDouble() == true ||
+        value.isNumeric() == true);    
+}
+bool jsonIsSuppportedType(Json::ValueIterator &iterator) {
+    Json::Value key = iterator.key();
+    Json::Value value = *iterator;
+
+    return (key.isString() == true && (
+        value.isString() == true ||
+        value.isBool() == true ||
+        value.isInt() == true ||
+        value.isUInt() == true ||
+        value.isDouble() == true ||
+        value.isNumeric() == true
+        ));
+}
+
 int getNumberOfRows(std::string table, int id) {  
     string database_name = string("dev");
     ITranslatable *getQuery = new Select(table, id);
