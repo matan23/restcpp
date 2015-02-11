@@ -14,9 +14,12 @@ private:
 	
    	std::string query;
 public:
+	int rc;
+	std::string error_message;
 	Sqlite(std::string, std::string);
 	int exec();
 	char *zErrMsg;
+	std::vector<std::map<std::string, std::string> > result;
 };
 
 #endif

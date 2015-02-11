@@ -3,7 +3,6 @@
 
 using namespace std;
 
-<<<<<<< HEAD
 void debug() {
 	string database_name = string("dev"); 
 	string table_name = string("person");
