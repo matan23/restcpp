@@ -11,6 +11,7 @@ static std::string _payload = "";
 class Response {
 	private:
 		tcp::socket& 		_socket;
+		std::string			_defaultHeader;
 
 		void	sendToClient(std::string &message);
 
@@ -23,6 +24,8 @@ class Response {
 		void	answer204();
 
 		void	answer400();
+		void	answer400WithPayload(std::string &payload);
+		void	answer403(std::string &payload);
 		void	answer404();
 		void	answer405();
 		void	answer500();

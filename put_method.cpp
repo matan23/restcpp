@@ -2,13 +2,13 @@
 
 using namespace std;
 
-static ITranslatable *exec_update(request_t& request_st, tcp::socket& socket) {
+static ITranslatable *exec_update(string table, int id, string &content, string &error) {
 	Json::Value root;   // will contains the root value after parsing
 	Json::Reader reader;
 	
-	bool parsingSuccessful = reader.parse(request_st.content, root);
+	bool parsingSuccessful = reader.parse(content, root);
 	if (!parsingSuccessful) {
-		parse_error(reader);
+		error = parse_error(reader);
 		return NULL;
 	}
 
@@ -20,31 +20,50 @@ static ITranslatable *exec_update(request_t& request_st, tcp::socket& socket) {
 		columns_key_value[column_name.c_str()] = column_value;
 	}
 
-	;
+	return new Update(table, id, columns_key_value);
+}
+
+int	put_method(request_t& request_st, tcp::socket& socket) {
 	std::string table;
 	int id;
 
 	istringstream (request_st.uri_args[1]) >> id;
 	table = request_st.uri_args[0];
 
-	return new Update(table, id, columns_key_value);
-}
-
-int	put_method(request_t& request_st, tcp::socket& socket) {
 	if (request_st.uri_args.size() == 2) {
-		cout << "looks ok" << endl;
 
-		ITranslatable *updateQuery = exec_update(request_st, socket);
+		if (getNumberOfRows(table, id) == 0) {
+			std::cout << "No row to update" << endl;
+			request_st.responseBuilder->answer404();
+			return -1;
+		}
+
+		string error = "";
+		ITranslatable *updateQuery = exec_update(table, id, request_st.content, error);
+		if (updateQuery == NULL) {		
+			request_st.responseBuilder->answer400WithPayload(error);
+			return -1;
+		}
 
 		string database_name = string("dev");
 		Sqlite *db =  new Sqlite(database_name, updateQuery->translateToSqlQuery());
 		cout << db->exec() << "\n";
-		if (db->zErrMsg != NULL) {
-			std::string ret = "ERROR";
-			boost::system::error_code ignored_error;
-	  		boost::asio::write(socket, boost::asio::buffer(ret), ignored_error);
+
+		std::cout << "error is :" << db->error_message << endl;
+
+		if (db->rc != SQLITE_OK && db->error_message != "") {
+			std::string error = db->error_message;
+			std::cout << db->error_message;
+
+			std::size_t found = error.find("no such");
+	  		if (found != std::string::npos) {		
+				request_st.responseBuilder->answer404();
+			} else {		
+				request_st.responseBuilder->answer500();		
+			}
 		} else {
-			request_st.responseBuilder->answer200();			
+			string location = "new data at";
+			request_st.responseBuilder->answer201(location);			
 		}
 	} else {
 		request_st.responseBuilder->answer400();

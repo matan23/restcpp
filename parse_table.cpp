@@ -3,13 +3,13 @@
 using namespace std;
 using boost::asio::ip::tcp;
 
-static ITranslatable *parse_payload(std::string &content) {
+static ITranslatable *parse_payload(std::string &content, std::string &error) {
 	Json::Value root;   // will contains the root value after parsing
 	Json::Reader reader;
 	
 	bool parsingSuccessful = reader.parse(content, root);
 	if (!parsingSuccessful) {
-		parse_error(reader);
+		error = parse_error(reader);
 		return NULL;
 	}
 
@@ -29,20 +29,30 @@ static ITranslatable *parse_payload(std::string &content) {
 
 void	parse_table(request_t& request_st, tcp::socket& socket) {
 	string database_name = string("dev"); 
+	std::string error = "";
 
+	ITranslatable *create_table = parse_payload(request_st.content, error);
 
-	ITranslatable *create_table = parse_payload(request_st.content);
+	if (create_table == NULL) {
+		request_st.responseBuilder->answer400WithPayload(error);
+		return;
+	}
 
 	cout << create_table->translateToSqlQuery() << "\n";	
 	Sqlite *db =  new Sqlite(database_name, create_table->translateToSqlQuery());
 	cout << db->exec() << "\n";
-	if (db->zErrMsg != NULL) {
-		std::string ret = "ERROR";
-		boost::system::error_code ignored_error;
-  		boost::asio::write(socket, boost::asio::buffer(ret), ignored_error);
+	
+	if (db->error_message != "") {
+		std::string error = db->error_message;
+		std::cout << db->error_message;
+
+		std::size_t found = error.find("already exists");
+  		if (found != std::string::npos) {		
+			request_st.responseBuilder->answer403(error);
+		} else {		
+			request_st.responseBuilder->answer500();		
+		}
 	} else {
-		std::string ret = "OK";
-		boost::system::error_code ignored_error;
-  		boost::asio::write(socket, boost::asio::buffer(ret), ignored_error);
+		request_st.responseBuilder->answer200();		
 	}
 }

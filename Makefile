@@ -24,7 +24,7 @@ OBJ	= $(SRC:.cpp=.o)
 
 CC      = g++
 
-CXXFLAGS  = -W -Wall 
+CXXFLAGS  = -W -Wall -g3
 
 # LFLAGS	= -pthread -lboost_system-mt -lboost_regex-mt -lboost_filesystem-mt
 

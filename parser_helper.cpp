@@ -1,7 +1,20 @@
 #include "restsql.h"
 
-void parse_error(Json::Reader &reader) {
-	  std::cout  << "Failed to parse configuration\n" << reader.getFormattedErrorMessages();
+std::string parse_error(Json::Reader &reader) {
+    std::string error = reader.getFormattedErrorMessages();
+	  std::cout  << "Failed to parse configuration\n" << error;
+return error;
+}
+
+int getNumberOfRows(std::string table, int id) {  
+    string database_name = string("dev");
+    ITranslatable *getQuery = new Select(table, id);
+
+    Sqlite *db =  new Sqlite(database_name, getQuery->translateToSqlQuery());
+    cout << getQuery->translateToSqlQuery() << "\n";
+    cout << db->exec() << "\n";
+
+    return db->result.size();
 }
 
 void printJSONValue(const Json::Value &val)

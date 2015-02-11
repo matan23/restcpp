@@ -31,7 +31,7 @@
 # define BUFFER_SIZE (8192)
 
 using boost::asio::ip::tcp;
-
+using namespace std;
 
 
 typedef struct			request_s {
@@ -59,8 +59,9 @@ using boost::asio::ip::tcp;
 
 void	parse_table(request_t& request_st, tcp::socket& socket);
 void	parse_row(request_t& request_st, tcp::socket& socket);
+int     getNumberOfRows(string table, int id);
 
-void parse_error(Json::Reader &reader);
+std::string parse_error(Json::Reader &reader);
 void printJSONValue(const Json::Value &val);
 
 void		server();

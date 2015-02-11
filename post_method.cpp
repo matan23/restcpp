@@ -8,29 +8,15 @@ using namespace std;
 //   std::vector<std::string>	uri_args;
 
 int	post_method(request_t& request_st, tcp::socket& socket) {
-	
-	cout << request_st.method;
-	cout << request_st.uri;
-	cout << request_st.content;
-// ...
 	if (request_st.uri_args.size() == 2) {
-		cout << "ERROR BAD URL" << endl;
-	} else if (request_st.uri_args.size() == 1) {
-		cout << "looks ok" << endl;
-		cout << request_st.uri_args[0] << endl;
+		request_st.responseBuilder->answer400();
+	} else if (request_st.uri_args.size() == 1) {		
 		if (request_st.uri_args[0] == "table") {						
-			cout << "parsing table" << endl;
 			parse_table(request_st, socket);
 		} else {
-			cout << "trying to parse row" << endl;
 			parse_row(request_st, socket);
 		}
 	} else {
-		cout << "ERROR BAD URL" << endl;
+		request_st.responseBuilder->answer400();
 	}
-
-
-
-for( std::vector<std::string>::const_iterator i = request_st.uri_args.begin(); i != request_st.uri_args.end(); ++i)
-    std::cout << *i << endl;
 }

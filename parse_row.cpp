@@ -2,13 +2,13 @@
 
 using namespace std;
 
-static ITranslatable *parse_payload(request_t& request_st) {
+static ITranslatable *parse_payload(request_t& request_st, string &error) {
 	Json::Value root;   // will contains the root value after parsing
 	Json::Reader reader;
 	
 	bool parsingSuccessful = reader.parse(request_st.content, root);
 	if (!parsingSuccessful) {
-		parse_error(reader);
+		error = parse_error(reader);
 		return NULL;
 	}
 
@@ -26,20 +26,30 @@ static ITranslatable *parse_payload(request_t& request_st) {
 void	parse_row(request_t& request_st, tcp::socket& socket) {
 	string database_name = string("dev"); 
 	string content = request_st.content;
+	string error = "";
 
-
-	ITranslatable *create_row = parse_payload(request_st);
+	ITranslatable *create_row = parse_payload(request_st, error);
+	if (create_row == NULL) {		
+		request_st.responseBuilder->answer400WithPayload(error);
+		return;
+	}
 
 	cout << create_row->translateToSqlQuery() << "\n";	
 	Sqlite *db =  new Sqlite(database_name, create_row->translateToSqlQuery());
 	cout << db->exec() << "\n";
-	if (db->zErrMsg != NULL) {
-		std::string ret = "ERROR";
-		boost::system::error_code ignored_error;
-  		boost::asio::write(socket, boost::asio::buffer(ret), ignored_error);
+
+	if (db->error_message != "") {
+		std::string error = db->error_message;
+		std::cout << db->error_message;
+
+		std::size_t found = error.find("no such");
+  		if (found != std::string::npos) {		
+			request_st.responseBuilder->answer404();
+		} else {		
+			request_st.responseBuilder->answer500();		
+		}
 	} else {
-		std::string ret = "OK";
-		boost::system::error_code ignored_error;
-  		boost::asio::write(socket, boost::asio::buffer(ret), ignored_error);
+		string location = "new data at";
+		request_st.responseBuilder->answer201(location);		
 	}
 }

@@ -6,7 +6,6 @@ void	server()
 	tcp::acceptor	acceptor(io, tcp::endpoint(tcp::v4(), 8080));
 	tcp::socket	socket(io);
 
-std::cout <<"bla";
 	try {
 		while (1) {
 			acceptor.accept(socket);
