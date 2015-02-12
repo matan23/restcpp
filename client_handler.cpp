@@ -50,10 +50,14 @@ void	client_handler(tcp::socket& socket) {
   std::string	request;
   request_t	request_st;
 
-  get_request_from_socket(socket, request);
-  if (parse_request_string(request, request_st) == false)
-    return ;
   request_st.responseBuilder = new Response(socket);
+
+  get_request_from_socket(socket, request);
+  if (parse_request_string(request, request_st) == false) {
+    request_st.responseBuilder->answer405();
+    return ;
+  }
+  
   dispatch(request_st, socket);
   socket.close();
 }

@@ -1,0 +1,36 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          MyRestSql
+# Required-Start:    
+# Required-Stop:     
+# Default-Start:     2
+# Default-Stop:      
+# Short-Description: Start MyRestSql
+# Description:       MyRestSql ETNA's project
+### END INIT INFO
+
+name=MyRestSql
+exec=./MyRestSql 
+
+start() {
+    $exec --daemonize 1>> log/stdout.log 2>> log/stderr.log
+}
+
+stop() {
+    pkill $name
+}
+
+case "$1" in
+    start|stop)
+	$1
+	;;
+    restart|reload|force-reload)
+	stop
+	start
+	;;
+    *)
+	echo 'Usage : $0 {start|stop|restart|reload|force-reload}'
+	;;
+esac
+
+exit 0

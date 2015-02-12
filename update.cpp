@@ -10,14 +10,14 @@ Update::Update(string table, int id, map<string, string> values){
 
 string Update::translateToSqlQuery() {
 	string query;
-	query = "UPDATE " + this->table + " SET ";
+	query = "UPDATE '" + this->table + "' SET ";
 
 	for(std::map<string, string>::iterator itr = this->values.begin(), itr_end = this->values.end(); itr != itr_end; ++itr) {
-		query += itr->first + " = '"  + itr->second + "', ";
+		query += "'" + itr->first + "' = '"  + itr->second + "', ";
 	}
 	query = query.substr(0, query.size()-2);
 	
-	query += " WHERE ID = " + to_string(this->id) + ";";
+	query += " WHERE ID = '" + to_string(this->id) + "';";
 
 	return query;
 }

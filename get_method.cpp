@@ -7,6 +7,12 @@ void	get_model(request_t& request_st, __attribute__((unused))tcp::socket& socket
 	std::string table;
 	int id;
 
+	if (!isInteger(request_st.uri_args[1])) {
+		std::string url_error = "please provide an id for this ressource";
+		request_st.responseBuilder->answer400WithPayload(url_error);
+		return;
+	}
+
 	istringstream (request_st.uri_args[1]) >> id;
 	table = request_st.uri_args[0];
 
@@ -107,7 +113,7 @@ int	get_method(request_t& request_st, __attribute__((unused))tcp::socket& socket
 	} else if (request_st.uri_args.size() == 1) {		
 		get_list(request_st, socket);		
 	} else {
-		cout << "ERROR BAD URL" << endl;
+		request_st.responseBuilder->answer405();
 	}
 	return 0;
 }

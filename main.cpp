@@ -124,6 +124,24 @@ void debug() {
 	
 }
 
-int	main(void) {
+int	main(int ac, char **av) {
+	pid_t pid, sid;
+
+	if (ac == 2) {
+	 	pid = fork();
+
+	  	if (pid < 0) {
+	    	exit(EXIT_FAILURE);
+	  	}
+	  	if (pid > 0) {
+	    	exit(EXIT_SUCCESS);
+	  	}
+
+	  	umask(0);
+	  	sid = setsid();
+	  	if (sid < 0) {
+	    	exit(EXIT_FAILURE);
+	  	}
+	}	
 	server();
 }

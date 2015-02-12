@@ -47,6 +47,8 @@ typedef	struct	s_route {
   int		(*ptr)(request_t& request_st, tcp::socket& socket);
 }				t_route;
 
+bool isInteger(const std::string & s);
+
 int		post_method(request_t& request_st, tcp::socket& socket);
 int		put_method(request_t& request_st, tcp::socket& socket);
 int		delete_method(request_t& request_st, tcp::socket& socket);

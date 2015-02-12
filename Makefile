@@ -1,5 +1,9 @@
 NAME    = MyRestSql
 
+INSTALL_DIR = /usr/local/bin
+RC_FILE = restsql.rc
+FILES_DIR = /etc/MyRestSql/
+
 SRC     = create_table.cpp\
 insert.cpp\
 update.cpp\
@@ -36,6 +40,12 @@ RM      = rm -f
 
 all	:  $(OBJ)
 	   $(CC) -o $(NAME) $(LFLAGS) main.cpp $(OBJ)	   
+
+install	:
+	  mkdir -p $(INSTALL_DIR)
+	  mkdir -p $(FILES_DIR)
+	  cp $(NAME) $(INSTALL_DIR)
+	  insserv $(RC_FILE)
 
 test :	$(OBJ)
 		g++ -otest $(LFLAGS) test.cpp $(OBJ)

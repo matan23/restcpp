@@ -7,10 +7,16 @@ int	delete_method(request_t& request_st, __attribute__((unused))tcp::socket& soc
 	std::string table;
 	int id;
 
-	istringstream (request_st.uri_args[1]) >> id;
-	table = request_st.uri_args[0];
-
 	if (request_st.uri_args.size() == 2) {
+
+		if (!isInteger(request_st.uri_args[1])) {
+			std::string url_error = "please provide an id for this ressource";
+			request_st.responseBuilder->answer400WithPayload(url_error);
+			return -1;
+		}
+		istringstream (request_st.uri_args[1]) >> id;
+		table = request_st.uri_args[0];
+
 		cout << "looks ok" << endl;
 
 		ITranslatable *deleteQuery = new Delete(table, id);

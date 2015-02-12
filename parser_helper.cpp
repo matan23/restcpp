@@ -1,5 +1,15 @@
 #include "restsql.h"
 
+bool isInteger(const std::string &s)
+{
+   if(s.empty() || ((!isdigit(s[0])) && (s[0] != '-') && (s[0] != '+'))) return false ;
+
+   char * p ;
+   strtol(s.c_str(), &p, 10) ;
+
+   return (*p == 0) ;
+}
+
 std::string parse_error(Json::Reader &reader) {
     std::string error = reader.getFormattedErrorMessages();
 	  std::cout  << "Failed to parse configuration\n" << error;

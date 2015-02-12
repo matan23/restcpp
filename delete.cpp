@@ -9,7 +9,7 @@ Delete::Delete(string table, int id){
 
 string Delete::translateToSqlQuery() {
 	string query;
-	query = "DELETE FROM " + this->table + " WHERE ID = " + to_string(this->id) + ";";
+	query = "DELETE FROM '" + this->table + "' WHERE ID = '" + to_string(this->id) + "';";
 
 	return query;
 }

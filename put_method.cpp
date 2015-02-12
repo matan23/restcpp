@@ -37,10 +37,16 @@ int	put_method(request_t& request_st, __attribute__((unused))tcp::socket& socket
 	std::string table;
 	int id;
 
-	istringstream (request_st.uri_args[1]) >> id;
-	table = request_st.uri_args[0];
-
 	if (request_st.uri_args.size() == 2) {
+
+		if (!isInteger(request_st.uri_args[1])) {
+			std::string url_error = "please provide an id for this ressource";
+			request_st.responseBuilder->answer400WithPayload(url_error);
+			return -1;
+		}
+
+		istringstream (request_st.uri_args[1]) >> id;
+		table = request_st.uri_args[0];
 
 		if (getNumberOfRows(table, id) == 0) {
 			std::cout << "No row to update" << endl;
@@ -67,13 +73,13 @@ int	put_method(request_t& request_st, __attribute__((unused))tcp::socket& socket
 
 			std::size_t found = error.find("no such");
 	  		if (found != std::string::npos) {		
-				request_st.responseBuilder->answer404();
+				request_st.responseBuilder->answer400WithPayload(error);
 			} else {		
 				request_st.responseBuilder->answer500();		
 			}
 		} else {
 			string location = "new data at";
-			request_st.responseBuilder->answer201(location);			
+			request_st.responseBuilder->answer200();
 		}
 	} else {
 		request_st.responseBuilder->answer400();
