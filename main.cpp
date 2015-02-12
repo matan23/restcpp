@@ -127,6 +127,8 @@ void debug() {
 int	main(int ac, char **av) {
 	pid_t pid, sid;
 
+	std::cout << "Launching the server" << std::endl;
+
 	if (ac == 2) {
 	 	pid = fork();
 

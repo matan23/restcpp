@@ -3,6 +3,7 @@ NAME    = MyRestSql
 INSTALL_DIR = /usr/local/bin
 RC_FILE = restsql.rc
 FILES_DIR = /etc/MyRestSql/
+LOG_DIR = /var/log/restsql
 
 SRC     = create_table.cpp\
 insert.cpp\
@@ -28,7 +29,7 @@ OBJ	= $(SRC:.cpp=.o)
 
 CC      = g++
 
-CXXFLAGS  = -W -Wall -g3
+CXXFLAGS  = -W -Wall -g3 -std=c++0x
 
 # LFLAGS	= -pthread -lboost_system-mt -lboost_regex-mt -lboost_filesystem-mt
 
@@ -44,8 +45,12 @@ all	:  $(OBJ)
 install	:
 	  mkdir -p $(INSTALL_DIR)
 	  mkdir -p $(FILES_DIR)
+	  mkdir -p $(LOG_DIR)
 	  cp $(NAME) $(INSTALL_DIR)
+	  cp $(RC_FILE) /etc/init.d/
 	  insserv $(RC_FILE)
+uninstall :
+	insserv --remove $(RC_FILE)
 
 test :	$(OBJ)
 		g++ -otest $(LFLAGS) test.cpp $(OBJ)

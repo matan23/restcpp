@@ -10,10 +10,17 @@
 ### END INIT INFO
 
 name=MyRestSql
-exec=./MyRestSql 
+exec=/usr/local/bin/MyRestSql
+STDOUT_LOG=/var/log/restsql/stdout.log
+STDERR_LOG=/var/log/restsql/stderr.log
 
 start() {
-    $exec --daemonize 1>> log/stdout.log 2>> log/stderr.log
+    echo 'Starting Service'
+    $exec --daemonize 1>> $STDOUT_LOG 2>> $STDERR_LOG
+}
+
+status() {
+   ps aux | grep $name | grep -v grep
 }
 
 stop() {
@@ -28,8 +35,11 @@ case "$1" in
 	stop
 	start
 	;;
+     status)
+    	$1  
+        ;;
     *)
-	echo 'Usage : $0 {start|stop|restart|reload|force-reload}'
+	echo 'Usage : $0 {status|start|stop|restart|reload|force-reload}'
 	;;
 esac
 
