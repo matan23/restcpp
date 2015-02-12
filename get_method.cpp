@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void	get_model(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
+void	get_model(request_t& request_st, tcp::socket& ATTR_UNUSED socket) {
 	string database_name = string("dev");
 	std::string table;
 	int id;
@@ -55,7 +55,7 @@ void	get_model(request_t& request_st, __attribute__((unused))tcp::socket& socket
 	}	
 }
 
-void	get_list(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
+void	get_list(request_t& request_st, tcp::socket& ATTR_UNUSED socket) {
 	string database_name = string("dev");
 	ITranslatable *listQuery = new Select(request_st.uri_args[0]);
 
@@ -107,7 +107,7 @@ void	get_list(request_t& request_st, __attribute__((unused))tcp::socket& socket)
 	}	
 }
 
-int	get_method(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
+int	get_method(request_t& request_st, tcp::socket& ATTR_UNUSED socket) {
 	if (request_st.uri_args.size() == 2) {
 		get_model(request_st, socket);		
 	} else if (request_st.uri_args.size() == 1) {		

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int	delete_method(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
+int	delete_method(request_t& request_st, ATTR_UNUSED tcp::socket& socket) {
 	string database_name = string("dev");
 	std::string table;
 	int id;

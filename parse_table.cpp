@@ -45,7 +45,7 @@ static ITranslatable *parse_payload(std::string &content, std::string &error) {
 	return new CreateTable(name.asString(), columns_name);
 }
 
-void	parse_table(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
+void	parse_table(request_t& request_st, ATTR_UNUSED tcp::socket& socket) {
 	string database_name = string("dev"); 
 	std::string error = "";
 

@@ -33,6 +33,11 @@
 using boost::asio::ip::tcp;
 using namespace std;
 
+#if (__GNUC__ > 2) || (__GNUC__ == 2 && __GNUC_MINOR__ > 4)
+#       define ATTR_UNUSED         __attribute__((__unused__))
+#else
+#       define ATTR_UNUSED
+#endif
 
 typedef struct			request_s {
   std::string			method;

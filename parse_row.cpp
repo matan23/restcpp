@@ -32,7 +32,7 @@ static ITranslatable *parse_payload(request_t& request_st, string &error) {
 	return new Insert(request_st.uri_args[0], columns_key_value);
 }
 
-void	parse_row(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
+void	parse_row(request_t& request_st, ATTR_UNUSED tcp::socket& socket) {
 	string database_name = string("dev"); 
 	string content = request_st.content;
 	string error = "";

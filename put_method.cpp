@@ -33,7 +33,7 @@ static ITranslatable *exec_update(string table, int id, string &content, string 
 	return new Update(table, id, columns_key_value);
 }
 
-int	put_method(request_t& request_st, __attribute__((unused))tcp::socket& socket) {
+int	put_method(request_t& request_st, ATTR_UNUSED tcp::socket& socket) {
 	std::string table;
 	int id;
 
