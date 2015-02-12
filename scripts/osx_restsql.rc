@@ -1,0 +1,34 @@
+#!/bin/sh
+
+name=MyRestSql
+plist_dir=/Users/matan/Library/LaunchAgents/com.mataejoon.restsql.plist
+
+start() {
+    launchctl load -w $plist_dir
+}
+
+stop() {
+    launchctl unload $plist_dir
+}
+
+status() {
+   ps aux | grep $name | grep -v grep
+}
+
+case "$1" in
+    start|stop)
+	$1
+	;;
+    restart|reload|force-reload)
+	stop
+	start
+	;;
+	status)
+	$1
+	;;
+    *)
+	echo 'Usage : $0 {status|start|stop|restart|reload|force-reload}'
+	;;
+esac
+
+exit 0

@@ -1,6 +1,7 @@
 NAME    = MyRestSql
 
 INSTALL_DIR = /usr/local/bin
+LAUNCHD_FILE = com.mataejoon.restsql.plist
 RC_FILE = restsql.rc
 FILES_DIR = /etc/MyRestSql/
 LOG_DIR = /var/log/restsql
@@ -42,6 +43,13 @@ RM      = rm -f
 all	:  $(OBJ)
 	   $(CC) -o $(NAME) $(LFLAGS) main.cpp $(OBJ)	   
 
+osx_install :
+	  cp scripts/$(LAUNCHD_FILE) /Users/matan/Library/LaunchAgents/
+	  scripts/osx_restsql.rc restart
+
+osx_uninstall :
+	  scripts/restsql.rc stop
+
 install	:
 	  mkdir -p $(INSTALL_DIR)
 	  mkdir -p $(FILES_DIR)
@@ -51,6 +59,7 @@ install	:
 	  insserv $(RC_FILE)
 uninstall :
 	insserv --remove $(RC_FILE)
+
 
 test :	$(OBJ)
 		g++ -otest $(LFLAGS) test.cpp $(OBJ)

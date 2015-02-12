@@ -1,12 +1,23 @@
+Exemple:
+
 Create Table
 URL: /table
 METHOD: POST
 PAYLOAD:
 {
-    "name" "Table",
+    "name" "fruits",
     "columns": {
-        "column1":"text"
-        "column2":"int",
+        "color":"text"
+        "juiciness":"int",
 
     }
+}
+
+INSERT ROW / UPDATE ROW
+URL: /fruits
+METHOD: POST/PUT
+PAYLOAD:
+{
+    "myColumnName":"value",
+    "myColumnName":"value"
 }
